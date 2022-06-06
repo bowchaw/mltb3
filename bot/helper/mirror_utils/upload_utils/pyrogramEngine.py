@@ -1,5 +1,9 @@
+import json
+import uuid
+import shlex
+import traceback
 from logging import getLogger, ERROR
-from os import remove as osremove, walk, path as ospath, rename as osrename
+from os import remove as osremove, walk, path as ospath, rename as osrename, makedirs
 from time import time, sleep
 from pyrogram.errors import FloodWait, RPCError
 from PIL import Image
@@ -18,6 +22,40 @@ VIDEO_SUFFIXES = ("MKV", "MP4", "MOV", "WMV", "3GP", "MPG", "WEBM", "AVI", "FLV"
 AUDIO_SUFFIXES = ("MP3", "M4A", "M4B", "FLAC", "WAV", "AIF", "OGG", "AAC", "DTS", "MID", "AMR", "MKA")
 IMAGE_SUFFIXES = ("JPG", "JPX", "PNG", "WEBP", "CR2", "TIF", "BMP", "JXR", "PSD", "ICO", "HEIC", "JPEG")
 
+def change_metadata(the_media: str):
+    file_name = the_media.rsplit("/", 1)[-1]
+    title = "Telegram @StreamersHub"
+    video_title = "Telegram @StreamersHub"
+    audio_title = "Telegram @StreamersHub"
+    subtitle_title = "Telegram @StreamersHub"
+
+    try:
+        result = srun(shlex.split(f"ffprobe -hide_banner -loglevel error -show_streams -print_format  json -show_format {shlex.quote(the_media)}"), capture_output=True)
+        details = json.loads(result.stdout.decode('utf-8'))
+        middle_cmd = f"new-api -i {shlex.quote(the_media)} -c copy -map 0"
+        if title:
+            middle_cmd += f' -metadata title="{title}"'
+        for stream in details["streams"]:
+            if (stream["codec_type"] == "video") and video_title:
+                middle_cmd += f' -metadata:s:{stream["index"]} title="{video_title}"'
+            elif (stream["codec_type"] == "audio") and audio_title:
+                middle_cmd += f' -metadata:s:{stream["index"]} title="{audio_title}"'
+            elif (stream["codec_type"] == "subtitle") and subtitle_title:
+                middle_cmd += f' -metadata:s:{stream["index"]} title="{subtitle_title}"'
+        dl_loc = "/usr/arc/app/warish" + uuid.uuid4().hex + "/"
+        if not ospath.isdir(dl_loc):
+            makedirs(dl_loc)
+        new_file_path = dl_loc + file_name
+        middle_cmd += f" {shlex.quote(new_file_path)}"
+        srun(shlex.split(middle_cmd))
+        if not ospath.isfile(new_file_path):
+            LOGGER.error("Failed to generate new metadata video ...")
+            return ""
+        return new_file_path
+    except Exception as err:
+        LOGGER.error(err)
+        traceback.print_exc()
+        return ""
 
 class TgUploader:
 
