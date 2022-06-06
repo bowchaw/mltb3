@@ -28,4 +28,4 @@ telegraph
 tenacity
 tgCrypto
 urllib3
-yt-dlp
+youtube-dl
