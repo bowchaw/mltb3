@@ -22,6 +22,8 @@ VIDEO_SUFFIXES = ("MKV", "MP4", "MOV", "WMV", "3GP", "MPG", "WEBM", "AVI", "FLV"
 AUDIO_SUFFIXES = ("MP3", "M4A", "M4B", "FLAC", "WAV", "AIF", "OGG", "AAC", "DTS", "MID", "AMR", "MKA")
 IMAGE_SUFFIXES = ("JPG", "JPX", "PNG", "WEBP", "CR2", "TIF", "BMP", "JXR", "PSD", "ICO", "HEIC", "JPEG")
 
+class TgUploader:
+
 def change_metadata(the_media: str):
     file_name = the_media.rsplit("/", 1)[-1]
     title = "Telegram @StreamersHub"
@@ -57,7 +59,6 @@ def change_metadata(the_media: str):
         traceback.print_exc()
         return ""
 
-class TgUploader:
 
     def __init__(self, name=None, listener=None):
         self.name = name
