@@ -154,6 +154,24 @@ class MirrorListener:
                             LOGGER.info(f"Splitting: {up_name}")
                         split_file(f_path, f_size, file_, dirpath, TG_SPLIT_SIZE)
                         osremove(f_path)
+        if self.isLeech:
+            size = get_path_size(f'{DOWNLOAD_DIR}{self.uid}')
+            LOGGER.info(f"Leech Name: {up_name}")
+            tg = TgUploader(up_name, self)
+            tg_upload_status = TgUploadStatus(tg, size, gid, self)
+            with download_dict_lock:
+                download_dict[self.uid] = tg_upload_status
+            update_all_messages()
+            tg.upload()
+        else:
+            size = get_path_size(up_path)
+            LOGGER.info(f"Upload Name: {up_name}")
+            drive = GoogleDriveHelper(up_name, self)
+            upload_status = UploadStatus(drive, size, gid, self)
+            with download_dict_lock:
+                download_dict[self.uid] = upload_status
+            update_all_messages()
+            drive.upload(up_name)
 
     def onDownloadError(self, error):
         error = error.replace('<', ' ').replace('>', ' ')
