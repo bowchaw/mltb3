@@ -388,12 +388,6 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
     listener = MirrorListener(bot, message, isZip, extract, isQbit, isLeech, pswd, tag)
 
     if is_gdrive_link(link):
-        if not isZip and not extract and not isLeech:
-            gmsg = f"Use /{BotCommands.CloneCommand} to clone Google Drive file/folder\n\n"
-            gmsg += f"Use /{BotCommands.ZipMirrorCommand} to make zip of Google Drive folder\n\n"
-            gmsg += f"Use /{BotCommands.UnzipMirrorCommand} to extracts Google Drive archive file"
-            sendMessage(gmsg, bot, message)
-        else:
             Thread(target=add_gd_download, args=(link, listener, is_gdtot)).start()
     elif is_mega_link(link):
         if MEGA_KEY is not None:
