@@ -1,7 +1,7 @@
 from random import SystemRandom
 from string import ascii_letters, digits
 from logging import getLogger
-from yt_dlp import YoutubeDL, DownloadError
+from youtube_dl import YoutubeDL, DownloadError
 from threading import RLock
 from time import time
 from re import search as re_search
