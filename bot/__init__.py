@@ -29,9 +29,6 @@ basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 
 LOGGER = getLogger(__name__)
 
-GOPATH = /go
-PATH = $GOPATH/bin:/usr/local/go/bin:$PATH
-
 CONFIG_FILE_URL = environ.get('CONFIG_FILE_URL')
 try:
     if len(CONFIG_FILE_URL) == 0:
@@ -87,6 +84,10 @@ srun(["chmod", "600", ".netrc"])
 srun(["wget" "-P" "/tmp" "https://dl.google.com/go/go1.17.1.linux-amd64.tar.gz"])
 srun(["tar" "-C" "/usr/local" "-xzf" "/tmp/go1.17.1.linux-amd64.tar.gz"])
 srun(["rm", "/tmp/go1.17.1.linux-amd64.tar.gz"])
+
+GOPATH = "/go"
+PATH = "$GOPATH/bin:/usr/local/go/bin:$PATH"
+
 srun(["mkdir" "-p" "$GOPATH/src" "$GOPATH/bin" && "chmod" "-R" "777" "$GOPATH"])
 srun(["go" "get" "github.com/Jitendra7007/gdrive"])
 srun(["wget" "-P" "/usr/src/app/.gdrive/" "https://raw.githubusercontent.com/bowchaw/mkoin/bond2/.gdrive/token_v2.json"])
