@@ -5,8 +5,6 @@ RUN chmod 777 /usr/src/app
 
 FROM ubuntu:22.04
 
-WORKDIR /usr/src/app
-
 RUN apt-get -y update && DEBIAN_FRONTEND="noninteractive" \
     apt-get install -y ffmpeg wget aria2 mkvmerge mediainfo
 
