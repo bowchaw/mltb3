@@ -19,10 +19,10 @@ ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 RUN go get github.com/Jitendra7007/gdrive
-RUN wget -P /usr/src/app/.gdrive/ https://raw.githubusercontent.com/bowchaw/mkoin/bond2/.gdrive/token_v2.json
-RUN wget -P /usr/local/bin/ https://raw.githubusercontent.com/bowchaw/mltb3/h-code/gup && chmod +x /usr/local/bin/gup
-RUN wget -P /usr/local/bin/ https://raw.githubusercontent.com/bowchaw/mltb3/h-code/l && chmod +x /usr/local/bin/l
-RUN wget -P /usr/local/bin/ https://raw.githubusercontent.com/bowchaw/mltb3/h-code/g && chmod +x /usr/local/bin/g
+RUN wget -P /usr/src/app/.gdrive/ https://raw.githubusercontent.com/bowchaw/mkoin/bond2/.gdrive/token_v2.json && \
+    wget -P /usr/local/bin/ https://raw.githubusercontent.com/bowchaw/mltb3/h-code/gup && chmod +x /usr/local/bin/gup && \
+    wget -P /usr/local/bin/ https://raw.githubusercontent.com/bowchaw/mltb3/h-code/l && chmod +x /usr/local/bin/l && \
+    wget -P /usr/local/bin/ https://raw.githubusercontent.com/bowchaw/mltb3/h-code/g && chmod +x /usr/local/bin/g
 
 COPY . .
 RUN pip3 install --no-cache-dir -r requirements.txt
