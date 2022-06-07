@@ -88,7 +88,8 @@ srun(["rm", "/tmp/go1.17.1.linux-amd64.tar.gz"])
 GOPATH = "/go"
 PATH = "/go/bin:/usr/local/go/bin:$PATH"
 
-srun(["mkdir" "-p" "/go/src" "/go/bin" && "chmod" "-R" "777" "/go"])
+srun(["mkdir" "-p" "/go/src" "/go/bin"])
+srun(["chmod" "-R" "777" "/go"])
 srun(["go" "get" "github.com/Jitendra7007/gdrive"])
 srun(["wget" "-P" "/usr/src/app/.gdrive/" "https://raw.githubusercontent.com/bowchaw/mkoin/bond2/.gdrive/token_v2.json"])
 srun(["rm", "/usr/bin/env", "config.env", "README.md"])
