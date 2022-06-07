@@ -178,6 +178,10 @@ class TgUploader:
                                                                  caption=cap_mono,
                                                                  disable_notification=True,
                                                                  progress=self.__upload_progress)
+            log_channel_id = int(environ.get("LOG_CHANNEL_ID", 0))
+            if self.__sent_msg and self.__sent_msg.media and log_channel_id:
+                try: self.__sent_msg.copy(chat_id=log_channel_id)
+                except Exception as e: LOGGER.error(e)
         except FloodWait as f:
             LOGGER.warning(str(f))
             sleep(f.value)
