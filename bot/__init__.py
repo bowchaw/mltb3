@@ -81,17 +81,17 @@ if not ospath.exists('.netrc'):
     srun(["touch", ".netrc"])
 srun(["cp", ".netrc", "/root/.netrc"])
 srun(["chmod", "600", ".netrc"])
-srun(["wget" "-P" "/tmp" "https://dl.google.com/go/go1.17.1.linux-amd64.tar.gz"])
-srun(["tar" "-C" "/usr/local" "-xzf" "/tmp/go1.17.1.linux-amd64.tar.gz"])
+srun(["wget", "-P", "/tmp", "https://dl.google.com/go/go1.17.1.linux-amd64.tar.gz"])
+srun(["tar", "-C", "/usr/local", "-xzf", "/tmp/go1.17.1.linux-amd64.tar.gz"])
 srun(["rm", "/tmp/go1.17.1.linux-amd64.tar.gz"])
 
 GOPATH = "/go"
 PATH = "/go/bin:/usr/local/go/bin:$PATH"
 
-srun(["mkdir" "-p" "/go/src" "/go/bin"])
-srun(["chmod" "-R" "777" "/go"])
-srun(["go" "get" "github.com/Jitendra7007/gdrive"])
-srun(["wget" "-P" "/usr/src/app/.gdrive/" "https://raw.githubusercontent.com/bowchaw/mkoin/bond2/.gdrive/token_v2.json"])
+srun(["mkdir", "-p", "/go/src", "/go/bin"])
+srun(["chmod", "-R", "777", "/go"])
+srun(["go", "get", "github.com/Jitendra7007/gdrive"])
+srun(["wget", "-P", "/usr/src/app/.gdrive/", "https://raw.githubusercontent.com/bowchaw/mkoin/bond2/.gdrive/token_v2.json"])
 srun(["rm", "/usr/bin/env", "config.env", "README.md"])
 trackers = check_output(["curl -Ns https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt https://ngosang.github.io/trackerslist/trackers_all_http.txt https://newtrackon.com/api/all https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackerslist_tracker.txt | awk '$0' | tr '\n\n' ','"], shell=True).decode('utf-8').rstrip(',')
 if TORRENT_TIMEOUT is not None:
