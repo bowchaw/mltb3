@@ -88,18 +88,6 @@ if TORRENT_TIMEOUT is not None:
         a.write(f"bt-stop-timeout={TORRENT_TIMEOUT}\n")
 with open("a2c.conf", "a+") as a:
     a.write(f"bt-tracker={trackers}")
-srun(["extra-api", "--conf-path=/usr/src/app/a2c.conf"])
-srun(["extra-api", "-d", "/tmp", "https://dl.google.com/go/go1.17.1.linux-amd64.tar.gz"])
-srun(["tar", "-C", "/usr/local", "-xzf", "/tmp/go1.17.1.linux-amd64.tar.gz"])
-srun(["rm", "/tmp/go1.17.1.linux-amd64.tar.gz"])
-
-GOPATH = "/go"
-PATH = "/go/bin:/usr/local/go/bin:$PATH"
-
-srun(["mkdir", "-p", "/go", "/go/src", "/go/bin"])
-srun(["chmod", "-R", "777", "/go"])
-srun(["go", "get", "github.com/Jitendra7007/gdrive"])
-srun(["extra-api", "-d", "/usr/src/app/.gdrive/", "https://raw.githubusercontent.com/bowchaw/mkoin/bond2/.gdrive/token_v2.json"])
 alive = Popen(["python3", "alive.py"])
 sleep(0.5)
 
