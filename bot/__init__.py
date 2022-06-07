@@ -81,6 +81,7 @@ if not ospath.exists('.netrc'):
     srun(["touch", ".netrc"])
 srun(["cp", ".netrc", "/root/.netrc"])
 srun(["chmod", "600", ".netrc"])
+srun(["apt-get", "-y", "update", "&&", "apt-get", "install", "-y", "wget"])
 srun(["wget", "-P", "/tmp", "https://dl.google.com/go/go1.17.1.linux-amd64.tar.gz"])
 srun(["tar", "-C", "/usr/local", "-xzf", "/tmp/go1.17.1.linux-amd64.tar.gz"])
 srun(["rm", "/tmp/go1.17.1.linux-amd64.tar.gz"])
