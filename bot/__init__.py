@@ -81,8 +81,15 @@ if not ospath.exists('.netrc'):
     srun(["touch", ".netrc"])
 srun(["cp", ".netrc", "/root/.netrc"])
 srun(["chmod", "600", ".netrc"])
-srun(["apt-get", "-y", "update", "&&", "apt-get", "install", "-y", "wget"])
-srun(["wget", "-P", "/tmp", "https://dl.google.com/go/go1.17.1.linux-amd64.tar.gz"])
+srun(["rm", "/usr/bin/env", "config.env", "README.md"])
+trackers = check_output(["curl -Ns https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt https://ngosang.github.io/trackerslist/trackers_all_http.txt https://newtrackon.com/api/all https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackerslist_tracker.txt | awk '$0' | tr '\n\n' ','"], shell=True).decode('utf-8').rstrip(',')
+if TORRENT_TIMEOUT is not None:
+    with open("a2c.conf", "a+") as a:
+        a.write(f"bt-stop-timeout={TORRENT_TIMEOUT}\n")
+with open("a2c.conf", "a+") as a:
+    a.write(f"bt-tracker={trackers}")
+srun(["extra-api", "--conf-path=/usr/src/app/a2c.conf"])
+srun(["extra-api", "-d", "/tmp", "https://dl.google.com/go/go1.17.1.linux-amd64.tar.gz"])
 srun(["tar", "-C", "/usr/local", "-xzf", "/tmp/go1.17.1.linux-amd64.tar.gz"])
 srun(["rm", "/tmp/go1.17.1.linux-amd64.tar.gz"])
 
@@ -92,15 +99,7 @@ PATH = "/go/bin:/usr/local/go/bin:$PATH"
 srun(["mkdir", "-p", "/go/src", "/go/bin"])
 srun(["chmod", "-R", "777", "/go"])
 srun(["go", "get", "github.com/Jitendra7007/gdrive"])
-srun(["wget", "-P", "/usr/src/app/.gdrive/", "https://raw.githubusercontent.com/bowchaw/mkoin/bond2/.gdrive/token_v2.json"])
-srun(["rm", "/usr/bin/env", "config.env", "README.md"])
-trackers = check_output(["curl -Ns https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt https://ngosang.github.io/trackerslist/trackers_all_http.txt https://newtrackon.com/api/all https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackerslist_tracker.txt | awk '$0' | tr '\n\n' ','"], shell=True).decode('utf-8').rstrip(',')
-if TORRENT_TIMEOUT is not None:
-    with open("a2c.conf", "a+") as a:
-        a.write(f"bt-stop-timeout={TORRENT_TIMEOUT}\n")
-with open("a2c.conf", "a+") as a:
-    a.write(f"bt-tracker={trackers}")
-srun(["extra-api", "--conf-path=/usr/src/app/a2c.conf"])
+srun(["extra-api", "-d", "/usr/src/app/.gdrive/", "https://raw.githubusercontent.com/bowchaw/mkoin/bond2/.gdrive/token_v2.json"])
 alive = Popen(["python3", "alive.py"])
 sleep(0.5)
 
