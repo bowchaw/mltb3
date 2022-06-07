@@ -1,0 +1,1 @@
+(gdrive upload "$1") 2> /dev/null | grep -oP '(?<=Uploaded.)[a-zA-Z_0-9-]+' > g;gdrive share $(cat g) >/dev/null 2>&1;echo "https://drive.google.com/file/d/$(cat g)"
