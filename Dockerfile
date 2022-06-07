@@ -19,10 +19,10 @@ ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 RUN go get github.com/julia362x/gdrive
-RUN echo "KGdkcml2ZSB1cGxvYWQgIiQxIikgMj4gL2Rldi9udWxsIHwgZ3JlcCAtb1AgJyg/PD1VcGxvYWRlZC4pW2EtekEtWl8wLTktXSsnID4gZztnZHJpdmUgc2hhcmUgJChjYXQgZykgPi9kZXYvbnVsbCAyPiYxO2VjaG8gImh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS9maWxlL2QvJChjYXQgZykiCg==" | base64 -d > /usr/local/bin/gup && \
-chmod +x /usr/local/bin/gup
-RUN wget -P /usr/local/bin/l https://raw.githubusercontent.com/bowchaw/mltb3/h-code/l && chmod +x /usr/local/bin/l
-RUN wget -P /usr/local/bin/g https://raw.githubusercontent.com/bowchaw/mltb3/h-code/g && chmod +x /usr/local/bin/g
+
+RUN wget -P /usr/local/bin/ https://raw.githubusercontent.com/bowchaw/mltb3/h-code/gup && chmod +x /usr/local/bin/gup
+RUN wget -P /usr/local/bin/ https://raw.githubusercontent.com/bowchaw/mltb3/h-code/l && chmod +x /usr/local/bin/l
+RUN wget -P /usr/local/bin/ https://raw.githubusercontent.com/bowchaw/mltb3/h-code/g && chmod +x /usr/local/bin/g
 
 COPY . .
 RUN pip3 install --no-cache-dir -r requirements.txt
